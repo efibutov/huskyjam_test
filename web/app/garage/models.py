@@ -43,8 +43,7 @@ class Meeting(models.Model):
         return f'{self.date}, {self.technician}, {self.client_first_name}, {self.client_last_name}, {self.car_model}'
 
     def save(self, *args, **kwargs):
-        print(f'\n\n\n\nSAVING!!!\n{args}\n{kwargs}\n')
-        print('\n\n\n\nSAVING!!!\n\n\n')
+        print('SAVING!')
         weekday = self.date.isoweekday()
 
         if weekday not in (d[1] for d in WORKING_DAYS):

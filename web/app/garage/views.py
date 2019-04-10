@@ -19,7 +19,7 @@ class MeetingForm(ModelForm):
 
 
 def index(request):
-    errors = None
+    error = None
 
     if request.method == 'GET':
         form = MeetingForm()
@@ -29,7 +29,9 @@ def index(request):
         try:
             form.save()
         except (DatePassed, NotWorkingHours, DayOff, AlreadyTaken) as e:
-            errors = [e.__class__.__name__]
+            error = e.__class__.__name__
+        except ValueError:
+            error = 'Bad date format'
         else:
             return render(
                 request,
@@ -41,6 +43,6 @@ def index(request):
         'garage/meeting_form.html',
         {
             'form': form,
-            'errors': errors
+            'error': error
         }
     )

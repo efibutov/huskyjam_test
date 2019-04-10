@@ -6,7 +6,8 @@ SECRET_KEY = '8_ypdapgxlc#&i4_k^xmrc&p8wny7@*!tc13g+hqm1j8dcnsp7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['postgres-db', 'localhost', 'nginx']
+# ALLOWED_HOSTS = ['postgres-db', 'ibm-server', 'nginx', 'localhost']
+ALLOWED_HOSTS = ['*']
 
 
 INSTALLED_APPS = [
@@ -82,7 +83,7 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Europe/Moscow'
 USE_I18N = True
 USE_L10N = True
-USE_TZ = True
+# USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)

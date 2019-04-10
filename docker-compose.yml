@@ -23,16 +23,16 @@ services:
     depends_on:
       - postgres-db
 
-  nginx:
-      image: nginx:1.13
-      ports:
-        - 80:80
-      volumes:
-        - ./nginx/config/nginx/conf.d:/etc/nginx/conf.d
-        - static_volume:/app/static/
-        - media_volume:/app/media/
-      depends_on:
-        - web
+#  nginx:
+#      image: nginx:1.13
+#      ports:
+#        - 80:80
+#      volumes:
+#        - ./nginx/config/nginx/conf.d:/etc/nginx/conf.d
+#        - static_volume:/app/static/
+#        - media_volume:/app/media/
+#      depends_on:
+#        - web
 
 volumes:
   database1_volume:

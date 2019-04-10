@@ -5,7 +5,31 @@
     <title>Meeting form</title>
 </head>
 <body>
-{% for meeting in meetings %}
-{% endfor %}
+    <h1>Назначить встречу</h1>
+    {% if errors %}
+        <h2>Возникла ошибка при заполнении формы <br />Пожалуйста, отредактируйте данные</h2>
+        <ul>
+            {% for error in errors %}
+                <li>
+                    {% if error == "DatePassed" %}
+                        <h4>Указанная дата уже прошла</h4>
+                    {% endif %}
+                    {% if error == "NotWorkingHours" %}
+                        <h4>Вы указали нерабочие часы (мы оработаем с 10:00 до 22:00</h4>
+                    {% endif %}
+                    {{ error }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <h3>Укажите Ваши данные:</h3>
+
+    <form action="/garage/" method="post">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <input type="submit" value="Назначить">
+    </form>
 </body>
 </html>

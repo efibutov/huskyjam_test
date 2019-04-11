@@ -1,14 +1,9 @@
 import os
 
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SECRET_KEY = '8_ypdapgxlc#&i4_k^xmrc&p8wny7@*!tc13g+hqm1j8dcnsp7'
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-# ALLOWED_HOSTS = ['postgres-db', 'ibm-server', 'nginx', 'localhost']
-ALLOWED_HOSTS = ['*']
-
+SECRET_KEY = os.environ['SECRET_KEY']
+DEBUG = False
+ALLOWED_HOSTS = ['nginx', 'localhost']
 
 INSTALLED_APPS = [
     'garage.apps.GarageConfig',
@@ -51,18 +46,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'main_portal.wsgi.application'
 
-
 DATABASES = {
     'default': {
-        'ENGINE':   'django.db.backends.postgresql',
-        'HOST':     'postgres-db',
-        'PORT':     '5432',
-        'NAME':     'garage_db',
-        'USER':     'garage_admin',
-        'PASSWORD': '12345678',
+        'ENGINE':       'django.db.backends.postgresql',
+        'HOST':         'postgres-db',
+        'PORT':         os.environ['DB_PORT'],
+        'NAME':         os.environ['DB_NAME'],
+        'USER':         os.environ['DB_USER'],
+        'PASSWORD':     os.environ['DB_PASSWORD']
     }
 }
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -83,13 +76,7 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Europe/Moscow'
 USE_I18N = True
 USE_L10N = True
-# USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.2/howto/static-files/
-# as declared in NginX conf, it must match /opt/services/djangoapp/static/
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-# do the same for media files, it must match /opt/services/djangoapp/media/
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_URL = '/static/'

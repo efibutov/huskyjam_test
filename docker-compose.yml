@@ -7,32 +7,37 @@ services:
     environment:
       POSTGRES_DB: 'garage_db'
       POSTGRES_USER: 'garage_admin'
-      POSTGRES_PASSWORD: '12345678'
+      POSTGRES_PASSWORD: 'q1w2e3r4t5y6'
     volumes:
       - database1_volume:/var/lib/postgresql/data
 
   web:
     container_name: garage_web
+    environment:
+      SECRET_KEY: '8_ypdapgxlc#&i4_k^xmrc&p8wny7@*!tc13g+hqm1j8dcnsp7'
+      DB_PORT: '5432'
+      DB_NAME: 'garage_db'
+      DB_USER: 'garage_admin'
+      DB_PASSWORD: 'q1w2e3r4t5y6'
+
     ports:
       - "8000:8000"
     build: './web'
     volumes:
-      - ./web/app:/app
       - static_volume:/app/static
       - media_volume:/app/media
     depends_on:
       - postgres-db
 
-#  nginx:
-#      image: nginx:1.13
-#      ports:
-#        - 80:80
-#      volumes:
-#        - ./nginx/config/nginx/conf.d:/etc/nginx/conf.d
-#        - static_volume:/app/static/
-#        - media_volume:/app/media/
-#      depends_on:
-#        - web
+  nginx:
+      build: './nginx'
+      ports:
+        - 80:80
+      volumes:
+        - static_volume:/app/static/
+        - media_volume:/app/media/
+      depends_on:
+        - web
 
 volumes:
   database1_volume:

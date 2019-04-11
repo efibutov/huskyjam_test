@@ -1,5 +1,4 @@
 #todo: user - run not as root
-#todo: merge install
 FROM python:3.6-slim
 #RUN groupadd -r uwsgi && useradd -r -g uwsgi uwsgi
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -17,5 +16,4 @@ RUN ["mkdir", "-p", "/app"]
 COPY /app /app
 COPY ./init_system.sh /init_system.sh
 RUN ["chmod", "+x", "/init_system.sh"]
-#CMD ["gunicorn", "--chdir", "/app", "--bind", ":8000", "main_portal.wsgi:application"]
-CMD ["python", "/app/manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["gunicorn", "--chdir", "/app", "--bind", ":8000", "main_portal.wsgi:application"]

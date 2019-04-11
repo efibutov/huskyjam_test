@@ -11,13 +11,13 @@ CAR_MODELS = (
         ('Buick',       'Buick'),
     )
 WORKING_HOURS = list(range(10, 23))
-WORKING_DAYS = (
-    ('Понедельник', 1),
-    ('Вторник',     2),
-    ('Среда',       3),
-    ('Четверг',     4),
-    ('Пятница',     5),
-)
+WORKING_DAYS = {
+    1: 'Понедельник',
+    2: 'Вторник',
+    3: 'Среда',
+    4: 'Четверг',
+    5: 'Пятница',
+}
 
 
 class Technician(models.Model):
@@ -32,7 +32,7 @@ class Meeting(models.Model):
     car_model = models.CharField(max_length=50, choices=CAR_MODELS, verbose_name='Марка автомобиля')
     client_first_name = models.CharField(max_length=50, verbose_name='Имя')
     client_last_name = models.CharField(max_length=50, verbose_name='Фамилия')
-    client_patronymic_name = models.CharField(max_length=50, verbose_name='Отчество')
+    client_patronymic_name = models.CharField(max_length=50, verbose_name='Отчество', blank=True)
 
     technician = models.ForeignKey(
         Technician, null=True, blank=False, on_delete=models.CASCADE, verbose_name='Выберите специалиста'
@@ -43,10 +43,9 @@ class Meeting(models.Model):
         return f'{self.date}, {self.technician}, {self.client_first_name}, {self.client_last_name}, {self.car_model}'
 
     def save(self, *args, **kwargs):
-        print('SAVING!')
         weekday = self.date.isoweekday()
 
-        if weekday not in (d[1] for d in WORKING_DAYS):
+        if weekday not in WORKING_DAYS:
             raise DayOff()
 
         now = timezone.now()
@@ -65,5 +64,3 @@ class Meeting(models.Model):
                 raise AlreadyTaken()
 
         super().save(*args, **kwargs)
-
-

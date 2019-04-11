@@ -1,5 +1,4 @@
 from django.forms import ModelForm
-from django import forms
 from django.shortcuts import render
 from .models import Meeting
 from .exceptions import DatePassed, NotWorkingHours, DayOff, AlreadyTaken
